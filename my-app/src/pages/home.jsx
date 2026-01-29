@@ -1,5 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
+// REDUX import
+import { useSelector, useDispatch } from 'react-redux'
+import { addToCard, } from '../feature/getProductData/getData'
+import { FetchProductsDate } from '../feature/getProductData/getData';
+//-----------
+
+// SWIPR import
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from "swiper/modules";
 
@@ -8,12 +15,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 
+//-----------------------
+
+//  Media import
 import heroImg_1 from '../assets/images/headphone.833a629bef903b002d42.png';
 import heroImg_2 from '../assets/images/hero-img.d2a94bcb6808ba269a25.png';
 import heroImg_3 from '../assets/images/watch-07.ab34f22bd9bf81f6c7b7.png';
 import heroImg_4 from '../assets/images/تنزيل.png';
 
 import { ShieldHalf, User, Star, Heart } from "lucide-react";
+import Rating from '../components/rating';
 
 
 const products = [
@@ -80,7 +91,26 @@ const items = [
 ];
 
 
+
+
+
 const Home = () => {
+
+
+    // redux code
+    const dispatch = useDispatch()
+
+    const productsData = useSelector((state) => { return (state.productDate.products); }) || []
+    console.log(productsData);
+
+
+    React.useEffect(() => {
+        dispatch(FetchProductsDate())
+        dispatch(addToCard())
+    }, [])
+
+
+
     return (
 
         <main className='bg-white'>
@@ -148,7 +178,7 @@ const Home = () => {
             {/*////////////////// SEC-3 BIGCOUNT /////////////// */}
             <section>
                 <div className='pt-12 flex flex-col items-center rounded-2xl mt-38 w-screen bg-neutral-content' >
-                    <h3 className='text-5xl text-accent font-bold'>big discound</h3>
+                    <h3 className='text-5xl text-accent font-bold capitalize'>big discound</h3>
 
                     <div className=' flex justify-center mt-6 w-full' >
                         <div className="divider divider-neutral h-1 w-1/3 text-accent  ">NEW </div>
@@ -156,7 +186,35 @@ const Home = () => {
 
 
                     {/* --------- Products from api ------------ */}
-                    <div className='w-full h-screen' ></div>
+                    <div className='w-3/4 grid mt-38 md:grid-cols-3 grid-cols-1 gap-3 items-start  ' >
+                        {productsData.map((item) => {
+                            return (
+                            <div style={{maxHeight:"550px"}} key={item.id} className="card gap-3  bg-primary-content text-neutral shadow-sm">
+                                <figure className=' w-full  max-h-2/5'>
+                                    <img
+                                    className='scale-50'
+                                        src={item.image}
+                                        alt="Shoes" />
+                                </figure>
+                                <div className="card-body">
+                                    <h2 style={{height:"80px"}} className="card-title overflow-hidden">{item.title}</h2>
+                                    <p style={{height:"120px"}} className='  overflow-hidden'>{item.description}</p>
+                                    <div className="flex flex-col text-lg w-full items- my-3 justify-center">
+                                        <p><span className='font-bold mr-1.5'> category:</span>{item.category}</p>
+                                        <p><span className='font-bold'> price:</span>12.3</p>
+                                        <p className='flex items-center'>
+                                            <span className='font-bold'>Rating:</span> <Rating value={item.rating.rate}/>
+                                        </p>
+
+                                    </div>
+                                    <div className="card-actions justify-end">
+                                        <button className="btn btn-primary">Buy Now</button>
+                                    </div>
+                                </div>
+                            </div>)
+
+                        })}
+                    </div>
                     {/* --------- Products from api ------------ */}
                 </div>
             </section>

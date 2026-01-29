@@ -5,18 +5,14 @@ import Shop from './pages/shop';
 import Card from './pages/card';
 
 
-import { useSelector, useDispatch } from 'react-redux'
-import { getDate } from './feature/getProductData/getData'
 import Navbar from './components/Navbar';
+import Footer from './components/footer';
 
 
 function App() {
   const [count, setCount] = useState(0)
 
-  // redux code
-  const dispatch = useDispatch()
-  const productsData = useSelector((state) => state.products)
-
+ 
 
   return (<>
   <Navbar/>
@@ -25,6 +21,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/card" element={<Card />} />
       </Routes>
+      <Footer/>
     
  </>  
   );
