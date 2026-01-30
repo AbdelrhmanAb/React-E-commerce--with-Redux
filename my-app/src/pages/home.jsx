@@ -101,7 +101,6 @@ const Home = () => {
     const dispatch = useDispatch()
 
     const productsData = useSelector((state) => { return (state.productDate.products); }) || []
-    console.log(productsData);
 
 
     React.useEffect(() => {
@@ -115,7 +114,7 @@ const Home = () => {
 
         <main className='bg-white'>
             {/* //////// SLIDER //////// */}
-            <div className="w-screen h-screen">
+            <div className="w-full h-screen">
                 <div className="w-full h-full ">
                     <Swiper
                         // style={{height:"100vh"}}
@@ -157,12 +156,13 @@ const Home = () => {
 
             {/* CARDS SEC-2 */}
             <section>
-                <div className='w-full bg-primary-content h-72 flex flex-col md:flex-row items-center justify-evenly' >
+                <div className='w-full bg-primary-content h-auto  flex flex-col md:flex-row gap-3 items-center justify-evenly py-14 mt-9' >
                     {items.map((item) => {
                         const Icon = item.icon
+                        
                         return (
 
-                            <div key={item.id} className='h-2/3 w-1/5 rounded-4xl bg-primary flex flex-col pt-2 gap-3 text-primary-content items-center'>
+                            <div key={item.id} className='h-48  md:w-1/5 w-2/4 rounded-4xl bg-primary flex flex-col pt-2 gap-3 text-primary-content items-center'>
 
                                 <span >< Icon size={"2.6rem"} /></span>
                                 <p>{item.name}</p>
@@ -176,9 +176,9 @@ const Home = () => {
             {/* CARDS SEC-2 */}
 
             {/*////////////////// SEC-3 BIGCOUNT /////////////// */}
-            <section>
-                <div className='pt-12 flex flex-col items-center rounded-2xl mt-38 w-screen bg-neutral-content' >
-                    <h3 className='text-5xl text-accent font-bold capitalize'>big discound</h3>
+             <section>
+                <div className='py-12 flex flex-col items-center rounded-2xl  w-full bg-neutral-content' >
+                    <h3 className='text-5xl text-accent font-bold capitalize'>shop</h3>
 
                     <div className=' flex justify-center mt-6 w-full' >
                         <div className="divider divider-neutral h-1 w-1/3 text-accent  ">NEW </div>
@@ -186,10 +186,10 @@ const Home = () => {
 
 
                     {/* --------- Products from api ------------ */}
-                    <div className='w-3/4 grid mt-38 md:grid-cols-3 grid-cols-1 gap-3 items-start  ' >
+                    <div className='w-3/4 grid mt-38 md:grid-cols-3 grid-cols-1 gap-12 items-start  ' >
                         {productsData.map((item) => {
                             return (
-                            <div style={{maxHeight:"550px"}} key={item.id} className="card gap-3  bg-primary-content text-neutral shadow-sm">
+                            <div style={{maxHeight:"550px"}} key={item.id} className="card gap-3 transition-all hover:scale-105 hover:shadow-2xl  bg-primary-content text-neutral shadow-sm">
                                 <figure className=' w-full  max-h-2/5'>
                                     <img
                                     className='scale-50'
@@ -202,9 +202,9 @@ const Home = () => {
                                     <div className="flex flex-col text-lg w-full items- my-3 justify-center">
                                         <p><span className='font-bold mr-1.5'> category:</span>{item.category}</p>
                                         <p><span className='font-bold'> price:</span>12.3</p>
-                                        <p className='flex items-center'>
+                                        <div className='flex items-center'>
                                             <span className='font-bold'>Rating:</span> <Rating value={item.rating.rate}/>
-                                        </p>
+                                        </div>
 
                                     </div>
                                     <div className="card-actions justify-end">
@@ -218,6 +218,7 @@ const Home = () => {
                     {/* --------- Products from api ------------ */}
                 </div>
             </section>
+
             {/*////////////////// SEC-3 BIGCOUNT /////////////// */}
 
         </main>
