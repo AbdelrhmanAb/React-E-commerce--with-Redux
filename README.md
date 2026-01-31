@@ -48,7 +48,7 @@ A **professional, modern, and fully responsive online store** built with **React
 
 ## 🔗 Live Demo
 
-*(Optional: add your deployed project link here if hosted on Vercel, Netlify, etc.)*
+*(https://polite-salmiakki-e6006d.netlify.app/)*
 
 ---
 
