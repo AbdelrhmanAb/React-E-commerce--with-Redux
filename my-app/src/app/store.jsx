@@ -6,3 +6,10 @@ export const store = configureStore({
         productDate: productDate
     }
 })
+
+
+store.subscribe(()=>{
+    const card  = store.getState().productDate.card;
+    localStorage.setItem("card",JSON.stringify(card))
+    
+})

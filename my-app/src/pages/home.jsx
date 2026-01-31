@@ -9,6 +9,7 @@ import { FetchProductsDate } from '../feature/getProductData/getData';
 // SWIPR import
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from "swiper/modules";
+import { toast } from "react-toastify";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -97,10 +98,18 @@ const items = [
 const Home = () => {
 
 
+
+
     // redux code
     const dispatch = useDispatch()
 
     const productsData = useSelector((state) => { return (state.productDate.products); }) || []
+    const handleAddToCard = (product) => {
+        dispatch(addToCard(product))
+        toast.success("Added to cart 🛒");
+
+
+    }
 
 
     React.useEffect(() => {
@@ -112,9 +121,9 @@ const Home = () => {
 
     return (
 
-        <main className='bg-white'>
+        <main className='bg-white mt-16'>
             {/* //////// SLIDER //////// */}
-            <div className="w-full h-screen">
+            <div className="w-full md:h-screen">
                 <div className="w-full h-full ">
                     <Swiper
                         // style={{height:"100vh"}}
@@ -137,13 +146,13 @@ const Home = () => {
                     >
                         {products.map((item) => (
                             <SwiperSlide key={item.id}>
-                                <div className="flex  items-center justify-between px-16 w-full  h-full  bg-gray-100 rounded-lg">
-                                    <div className='w-1/2 flex flex-col gap-4'>
-                                        <h5 className='text-5xl text-blue-950  '>{item.offer}</h5>
-                                        <p className='text-cyan-950'>{item.discribtion}</p>
+                                <div className="flex flex-col-reverse md:flex-row  items-center justify-between md:px-16 px-6 w-full  h-full  bg-gray-100 rounded-lg">
+                                    <div className='md:w-1/2 flex flex-col gap-4'>
+                                        <h5 className='md:text-5xl text-2xl text-blue-950  '>{item.offer}</h5>
+                                        <p className='text-cyan-950 md:text-lg text-sm '>{item.discribtion}</p>
                                         <button className="btn btn-primary">Primary</button>
                                     </div>
-                                    <img src={item.img} alt={item.name} className="h-2/3 object-contain mb-4" />
+                                    <img src={item.img} alt={item.name} className="md:h-2/3 h-1/2 object-contain md:mb-4" />
                                     {/* <h2 className="text-xl font-bold">{item.name}</h2> */}
                                 </div>
                             </SwiperSlide>
@@ -159,13 +168,13 @@ const Home = () => {
                 <div className='w-full bg-primary-content h-auto  flex flex-col md:flex-row gap-3 items-center justify-evenly py-14 mt-9' >
                     {items.map((item) => {
                         const Icon = item.icon
-                        
+
                         return (
 
-                            <div key={item.id} className='h-48  md:w-1/5 w-2/4 rounded-4xl bg-primary flex flex-col pt-2 gap-3 text-primary-content items-center'>
+                            <div key={item.id} className='h-48  md:w-1/5 w-2/3 rounded-4xl bg-primary flex flex-col pt-2 gap-3 text-primary-content items-center'>
 
                                 <span >< Icon size={"2.6rem"} /></span>
-                                <p>{item.name}</p>
+                                <p className='text-2xl'>{item.name}</p>
                                 <p className='text-sm'>{item.description}</p>
                             </div>
                         )
@@ -176,7 +185,7 @@ const Home = () => {
             {/* CARDS SEC-2 */}
 
             {/*////////////////// SEC-3 BIGCOUNT /////////////// */}
-             <section>
+            <section>
                 <div className='py-12 flex flex-col items-center rounded-2xl  w-full bg-neutral-content' >
                     <h3 className='text-5xl text-accent font-bold capitalize'>shop</h3>
 
@@ -189,29 +198,32 @@ const Home = () => {
                     <div className='w-3/4 grid mt-38 md:grid-cols-3 grid-cols-1 gap-12 items-start  ' >
                         {productsData.map((item) => {
                             return (
-                            <div style={{maxHeight:"550px"}} key={item.id} className="card gap-3 transition-all hover:scale-105 hover:shadow-2xl  bg-primary-content text-neutral shadow-sm">
-                                <figure className=' w-full  max-h-2/5'>
-                                    <img
-                                    className='scale-50'
-                                        src={item.image}
-                                        alt="Shoes" />
-                                </figure>
-                                <div className="card-body">
-                                    <h2 style={{height:"80px"}} className="card-title overflow-hidden">{item.title}</h2>
-                                    <p style={{height:"120px"}} className='  overflow-hidden'>{item.description}</p>
-                                    <div className="flex flex-col text-lg w-full items- my-3 justify-center">
-                                        <p><span className='font-bold mr-1.5'> category:</span>{item.category}</p>
-                                        <p><span className='font-bold'> price:</span>12.3</p>
-                                        <div className='flex items-center'>
-                                            <span className='font-bold'>Rating:</span> <Rating value={item.rating.rate}/>
-                                        </div>
+                                <div style={{ maxHeight: "550px" }} key={item.id} className="card gap-3 transition-all hover:scale-105 hover:shadow-2xl  bg-primary-content text-neutral shadow-sm">
+                                    <figure className=' w-full  max-h-2/5'>
+                                        <img
+                                            className='scale-50'
+                                            src={item.image}
+                                            alt="Shoes" />
+                                    </figure>
+                                    <div className="card-body">
+                                        <h2 style={{ height: "80px" }} className="card-title overflow-hidden">{item.title}</h2>
+                                        {/* <p style={{ height: "120px" }} className='  overflow-hidden'>{item.description}</p> */}
+                                        <div className="flex flex-col text-lg w-full items- my-3 justify-center">
+                                            <p><span className='font-bold mr-1.5'> category:</span>{item.category}</p>
+                                            <p><span className='font-bold'> price:</span>12.3</p>
+                                            <div className='flex items-center'>
+                                                <span className='font-bold'>Rating:</span> <Rating value={item.rating.rate} />
+                                            </div>
 
+                                        </div>
+                                        <div className="card-actions justify-end">
+                                            <button
+                                                onClick={() => { handleAddToCard(item) }}
+
+                                                className="btn btn-primary">Buy Now</button>
+                                        </div>
                                     </div>
-                                    <div className="card-actions justify-end">
-                                        <button className="btn btn-primary">Buy Now</button>
-                                    </div>
-                                </div>
-                            </div>)
+                                </div>)
 
                         })}
                     </div>

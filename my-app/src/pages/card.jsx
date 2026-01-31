@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Minus ,Plus , Trash} from 'lucide-react';
 
-import { delelte } from '../feature/getProductData/getData';
+import { delelte , increase, discrease} from '../feature/getProductData/getData';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,7 +10,6 @@ const Card = () => {
 
   const dispatch = useDispatch()
   const CardList = useSelector((state)=>{return state.productDate.card})||[]
-  console.log(CardList);
 
   useEffect(()=>{
     const handeletotal = CardList.map(
@@ -24,12 +23,12 @@ const Card = () => {
   
 
   return (
-    <div className=' container my-24 px-4  m-auto bg-neutral-content'>
+    <div className=' container relative mb-24 mt-16 pt-4 md:px-24  m-auto bg-neutral-content'>
       <div className="flex gap-14 w-full flex-col-reverse md:flex-row   justify-between">
         <div className="md:w-2/3 w-full flex flex-col gap-5 ">
           {CardList.map((item) => {
             return (
-              <div key={item.id} className='md:h-48 h-96 p-4 relative flex md:flex-row flex-col gap-4 rounded-2xl bg-white text-neutral w-full'>
+              <div key={item.id} className='md:h-48  p-4 relative flex md:flex-row flex-col gap-4 rounded-2xl bg-white text-neutral w-full'>
 
                 {/* delete div */}
                 <div onClick={()=>{dispatch(delelte(item.id))}} className="btn btn-error btn-ghost text-4xl absolute p-2 top-2 right-2"><Trash/></div>
@@ -37,7 +36,7 @@ const Card = () => {
 
                 {/* Image div */}
 
-                <div className=" md:w-1/4 md:h-full w-full h-1/2 shadow-2xl rounded-3xl">
+                <div className=" md:w-1/4 md:h-full w-full h-1/2 shadow-sm rounded-3xl">
                 <img src={item.image} alt={item.title} className='m-auto h-full' /></div>
                 {/* -------------- */}
 
@@ -52,10 +51,10 @@ const Card = () => {
                 {/* -------------- */}
 
                 {/* Actions Div */}
-                <div className="flex h-full items-end gap-5 ">
-                  <div className="btn btn-error btn-ghost"><Minus/></div>
-                  <div className="text-lg mb-2">1</div>
-                  <div className="btn btn-success btn-ghost"><Plus/></div>
+                <div className="flex  h-full items-end gap-5 ">
+                  <div onClick={()=>{dispatch(discrease(item))}} className="btn btn-error btn-ghost"><Minus/></div>
+                  <div className="text-lg mb-2">{item.quantity}</div>
+                  <div onClick={()=>{dispatch(increase(item))}} className="btn btn-success btn-ghost"><Plus/></div>
                 </div>
                 {/* ---------------- */}
 

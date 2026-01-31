@@ -6,7 +6,7 @@ import { addToCard, catogProducts, SearchOfProduct } from '../feature/getProduct
 import { FetchProductsDate } from '../feature/getProductData/getData';
 //-----------
 
-
+import { toast } from 'react-toastify';
 
 import Rating from '../components/rating';
 import backgroundimg from "../assets/images/gradient-blue-background-free-vector.jpg"
@@ -22,7 +22,7 @@ const Shop = () => {
 
   const productsData = useSelector((state) => { return (state.productDate.products); }) || []
 
-    
+
 
   const Filterproductslist = useSelector(
     (state) => {
@@ -39,6 +39,7 @@ const Shop = () => {
   }
   const handleAddToCard = (product) => {
     dispatch(addToCard(product))
+    toast.success("Added to cart 🛒");
 
 
   }
@@ -46,7 +47,6 @@ const Shop = () => {
 
   React.useEffect(() => {
     dispatch(FetchProductsDate())
-    dispatch(addToCard())
   }, [])
 
 
@@ -54,7 +54,7 @@ const Shop = () => {
     <main>
       {/* ------------------- SEC-1 hero image-sec ----------------- */}
       <section>
-        <div className="bg-neutral-content">
+        <div className="mt-16">
           <div
             style={{
               backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url(${backgroundimg})`,
@@ -70,7 +70,9 @@ const Shop = () => {
             </h1>
 
           </div>
-          <div className="flex py-22 px-12 bg-neutral-content    ">
+
+          {/* ----------search sec-ser ------------- */}
+          <div className="flex flex-col gap-3 md:flex-row py-22 px-12 bg-neutral-content    ">
 
             <select value={catogery} onChange={(value) => {
               setCatogery(value.target.value)
@@ -84,7 +86,7 @@ const Shop = () => {
               <option>women's clothing</option>
             </select>
 
-            <label className="input input-lg input-secondary bg-info-content w-3/5 m-auto ">
+            <label className="input input-lg input-secondary bg-info-content md:w-3/5 w-full m-auto ">
               <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <g
                   strokeLinejoin="round"
@@ -100,6 +102,8 @@ const Shop = () => {
               <input type="search" value={search} onChange={(value) => { handleSearchField(value.target.value) }} required placeholder="Search" />
             </label>
           </div>
+          {/* ----------search sec-ser ------------- */}
+
         </div>
       </section>
       {/* ------------------- SEC-1 hero image-sec ----------------- */}
@@ -127,8 +131,8 @@ const Shop = () => {
                       alt="Shoes" />
                   </figure>
                   <div className="card-body">
-                    <h2 style={{ height: "80px" }} className="card-title overflow-hidden">{item.title}</h2>
-                    <p style={{ height: "120px" }} className='  overflow-hidden'>{item.description}</p>
+                    <h2 style={{ height: "90px" }} className="card-title overflow-hidden">{item.title}</h2>
+                    {/* <p style={{ height: "120px" }} className='  overflow-hidden'>{item.description}</p> */}
                     <div className="flex flex-col text-lg w-full items- my-3 justify-center">
                       <p><span className='font-bold mr-1.5'> category:</span>{item.category}</p>
                       <p><span className='font-bold'> price:</span>12.3</p>

@@ -14,7 +14,7 @@ const initialState = {
     result: "emty",
     products: [],
     CategoryList: [],
-    card:[],
+    card:JSON.parse(localStorage.getItem("card"))|| [],
     isloading: false,
 }
 
@@ -22,29 +22,27 @@ const initialState = {
 
 
 const ProductSlice = createSlice({
-    name: "getProduct", 
+    name: "getProduct",
     initialState,
     reducers: {
         addToCard: (state, action) => {
             const product = action.payload
-            console.log(product);
-            
-            if (!product||!product.id) {
+
+            if (!product || !product.id) {
                 return;
-                
+
             }
 
-            const exist = state.card.find((item)=>{
+            const exist = state.card.find((item) => {
                 return item.id === product.id
             })
-            console.log(exist);
-            
+
 
             if (exist) {
 
-                exist.quantity  +=1
-            }else{
-                state.card.push({...product,quantity:1})
+                exist.quantity += 1
+            } else {
+                state.card.push({ ...product, quantity: 1 })
             }
 
 
@@ -53,11 +51,43 @@ const ProductSlice = createSlice({
 
         },
 
-        delelte:(state, action)=>{
+        delelte: (state, action) => {
             const id = action.payload
-            state.card = state.card.filter((item)=>{
+            state.card = state.card.filter((item) => {
                 return item.id !== id
             })
+
+        },
+        increase: (state, action) => {
+           const product = action.payload
+           const item = state.card.find((item)=>{
+            return item.id === product.id
+           })
+
+           if (item) {
+            item.quantity+=1
+            
+           }
+
+        },
+        discrease: (state, action) => {
+              const product = action.payload
+           const item = state.card.find((item)=>{
+            return item.id === product.id
+           })
+
+           if (item.quantity == 1) {
+            state.card = state.card.filter((i)=>{
+                return i.id !== item.id
+
+            })}
+
+            if (item) {
+                item.quantity -=1
+                
+            }
+            
+           
 
         },
         catogProducts: (state, action) => {
@@ -108,4 +138,11 @@ const ProductSlice = createSlice({
 export default ProductSlice.reducer
 
 
-export const { addToCard, catogProducts, SearchOfProduct, delelte } = ProductSlice.actions 
+export const {
+    addToCard,
+    catogProducts,
+    SearchOfProduct,
+    delelte,
+    increase,
+    discrease,
+} = ProductSlice.actions 
